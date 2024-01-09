@@ -32,7 +32,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4.0.0
-        
+    - name: Declare some variables
+      shell: bash
+      run: |
+         echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+         echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV" 
     - name: Run Tests with Maven
       run: mvn -B test --file pom.xml
 
@@ -60,4 +64,4 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Artifact'
-          artifacts: '[{"name": "app-devops.jar","version": "3.${{ github.run_number }}","semanticVersion": "3.${{ github.run_number }}.0","repositoryName": "${{ github.repository }}"}]'
+          artifacts: '[{"name": "app-devops.jar","version": "${{ env.sha_short }}_${{ env.branch }}"","semanticVersion": "${{ env.sha_short }}","repositoryName": "${{ github.repository }}"}]'
