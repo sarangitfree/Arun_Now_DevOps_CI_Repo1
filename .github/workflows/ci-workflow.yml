@@ -30,7 +30,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-
+    - name: Checkout
+      uses: actions/checkout@v4.0.0
     - name: Run Tests with Maven
       run: mvn -B test --file pom.xml 
     - name: ServiceNow DevOps Unit Test Results
