@@ -51,15 +51,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4.0.0
-    - name: Declare some variables
-      shell: bash
+    - name: Extract Version
       run: |
-       echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
-       echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
-    - name: Another step
-      run: |
-       echo "Branch: ${{ env.branch }}"
-       echo "Sha: ${{ env.sha_short }}"
+          version=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' pom.xml | head -1)
+          echo " Version extrated from pom.xml: $version"
+          echo "pomversion=$(echo $version})" >> "$GITHUB_ENV"
     - name: ServiceNow Register Artifact
       uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
       with:
@@ -68,4 +64,4 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Artifact'
-          artifacts: '[{"name": "app-devops.jar","version": "${{ env.branch }}"","semanticVersion": "${{ env.branch}}","repositoryName": "${{ github.repository }}"}]'
+          artifacts: '[{"name": "app-devops.jar","version": "${{ env.pomversion}}"","semanticVersion": "${{ env.pomversion}}.${{ github.run_number }}","repositoryName": "${{ github.repository }}"}]'
