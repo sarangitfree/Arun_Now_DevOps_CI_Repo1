@@ -68,4 +68,4 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Artifact'
-          artifacts: '[{"name": "app-devops.jar","version": "${{ env.sha_short }}"","semanticVersion": "${{ env.sha_short }}","repositoryName": "${{ github.repository }}"}]'
+          artifacts: '[{"name": "app-devops.jar","version": "${{ env.branch }}"","semanticVersion": "${{ env.branch}}","repositoryName": "${{ github.repository }}"}]'
