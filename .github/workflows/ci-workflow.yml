@@ -30,17 +30,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4.0.0
-    - name: Declare some variables
-      shell: bash
-      run: |
-       echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
-       echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
-    - name: Another step
-      run: |
-       echo "Branch: ${{ env.branch }}"
-       echo "Sha: ${{ env.sha_short }}"
+
     - name: Run Tests with Maven
       run: mvn -B test --file pom.xml 
     - name: ServiceNow DevOps Unit Test Results
@@ -58,9 +48,20 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: ServiceNow Register Artifact
-        uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
-        with:
+    - name: Checkout
+      uses: actions/checkout@v4.0.0
+    - name: Declare some variables
+      shell: bash
+      run: |
+       echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+       echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
+    - name: Another step
+      run: |
+       echo "Branch: ${{ env.branch }}"
+       echo "Sha: ${{ env.sha_short }}"
+    - name: ServiceNow Register Artifact
+      uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
+      with:
           devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
