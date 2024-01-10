@@ -32,11 +32,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4.0.0
-        
     - name: Run Tests with Maven
-      run: mvn -B test --file pom.xml
-
-     
+      run: mvn -B test --file pom.xml 
     - name: ServiceNow DevOps Unit Test Results
       uses: ServiceNow/servicenow-devops-test-report@v3.0.0
       with:
@@ -52,12 +49,21 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: ServiceNow Register Artifact
-        uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
-        with:
+    - name: Checkout
+      uses: actions/checkout@v4.0.0
+    - name: Extract Version
+      run: |
+          version=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' pom.xml | head -1)
+          echo " Version extrated from pom.xml: $version"
+          echo "pomversion=$(echo $version)" >> "$GITHUB_ENV"
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
+    - name: ServiceNow Register Artifact
+      uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
+      with:
           devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Artifact'
-          artifacts: '[{"name": "app-devops.jar","version": "3.${{ github.run_number }}","semanticVersion": "3.${{ github.run_number }}.0","repositoryName": "${{ github.repository }}"}]'
+          artifacts: '[{"name": "repo1-artifact1-${{ env.branch }}-${{ env.sha_short }}.jar","version": "${{ env.pomversion}}","semanticVersion": "${{ env.pomversion}}","repositoryName": "${{ github.repository }}"}]'
