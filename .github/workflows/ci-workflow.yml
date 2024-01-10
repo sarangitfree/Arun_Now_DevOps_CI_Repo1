@@ -61,7 +61,7 @@ jobs:
           sha=$(git rev-parse --short "$GITHUB_SHA")
           echo $sha
           touch $sha
-          artifact=repo-artifact1-$(git rev-parse --short "$GITHUB_SHA")-$version
+          artifact=repo-artifact1-$(git rev-parse --short "$GITHUB_SHA").jar-$version
           echo "artifact details are $artifact"
           echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")
         
