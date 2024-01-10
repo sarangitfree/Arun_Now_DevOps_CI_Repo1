@@ -79,7 +79,8 @@ jobs:
         API_TOKEN_GITHUB: ${{ secrets.Build_REPO_PERSONAL_ACCESS_TOKEN }}   
       with:
         # GitHub Action output files
-        source_file: '${{ env.sha_short }}'
+       # source_file: '${{ env.sha_short }}'
+        source_file: 'repo-artifact1-${{ env.sha_short }}.jar_${{ env.pomversion}}'
         user_name: 'ArunKumarReddy407'
         destination_repo: 'ArunKumarReddy407/buildmetadata'
         destination_folder: 'release/comp1/'
