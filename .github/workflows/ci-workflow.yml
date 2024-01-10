@@ -55,16 +55,18 @@ jobs:
       run: |
           version=$(sed -n 's,.*<version>\(.*\)</version>.*,\1,p' pom.xml | head -1)
           echo " Version extrated from pom.xml: $version"
+          name=$(sed -n 's,.*<artifactId>\(.*\)</artifactId.*,\1,p' pom.xml | head -1)
+          echo " artifactid extrated from pom.xml: $name"
           echo "pomversion=$(echo $version)" >> "$GITHUB_ENV"
           echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
           echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
           sha=$(git rev-parse --short "$GITHUB_SHA")
           echo $sha
           touch $sha
-          artifact=repo-artifact1-$(git rev-parse --short "$GITHUB_SHA").jar-$version
+          artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar-$version
           echo "artifact details are $artifact"
           echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")
-          
+
           
           
     - name: ServiceNow Register Artifact
@@ -75,7 +77,7 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Register Artifact'
-          artifacts: '[{"name": "repo-artifact1-${{ env.sha_short }}.jar","version": "${{ env.pomversion}}","semanticVersion": "${{ env.pomversion}}","repositoryName": "${{ github.repository }}"}]'
+          artifacts: '[{"name": "$name-${{ env.sha_short }}.jar","version": "${{ env.pomversion}}","semanticVersion": "${{ env.pomversion}}","repositoryName": "${{ github.repository }}"}]'
 
     - name: Push to Build Registry
       uses: dmnemec/copy_file_to_another_repo_action@main
