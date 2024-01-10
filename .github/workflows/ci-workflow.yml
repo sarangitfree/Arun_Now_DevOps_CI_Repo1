@@ -73,7 +73,7 @@ jobs:
     - name: Push to Build Registry
       uses: dmnemec/copy_file_to_another_repo_action@main
       env: 
-        API_TOKEN_GITHUB: ${{ secrets.EXTERNAL_REPOSITORY_PERSONAL_ACCESS_TOKEN }}   
+        API_TOKEN_GITHUB: ${{ secrets.Build_REPO_PERSONAL_ACCESS_TOKEN }}   
       with:
         # GitHub Action output files
         source_file: '12345'
