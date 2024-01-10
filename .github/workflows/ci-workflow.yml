@@ -58,7 +58,8 @@ jobs:
           echo "pomversion=$(echo $version)" >> "$GITHUB_ENV"
           echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
           echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
-          touch "${{ env.sha_short }}"
+          echo "${{ env.sha_short }}"
+          touch 12345
     - name: ServiceNow Register Artifact
       uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
       with:
@@ -75,7 +76,7 @@ jobs:
         API_TOKEN_GITHUB: ${{ secrets.EXTERNAL_REPOSITORY_PERSONAL_ACCESS_TOKEN }}   
       with:
         # GitHub Action output files
-        source_file: '${{ env.sha_short }}'
+        source_file: '12345'
         user_name: 'ArunKumarReddy407'
         destination_repo: 'ArunKumarReddy407/buildmetadata'
         destination_folder: 'release/comp1/'
