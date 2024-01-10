@@ -61,7 +61,9 @@ jobs:
           sha=$(git rev-parse --short "$GITHUB_SHA")
           echo $sha
           touch $sha
-          echo "repo-artifact1-${{ env.sha_short }}_${{ env.pomversion}}" > $(git rev-parse --short "$GITHUB_SHA")
+          artifact=repo-artifact1-${{ env.sha_short }}_${{ env.pomversion}}
+          echo "artifact details are $artifact"
+          echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")
         
  
           
