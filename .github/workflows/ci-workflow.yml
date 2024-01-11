@@ -69,7 +69,7 @@ jobs:
           echo "repo=$(echo $reponame)"  >> "$GITHUB_ENV"
           artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar_$version_"$reponame"
           echo "artifact details are $artifact"
-          echo "filename=$(echo $name)"
+          echo "filename=$(echo $artifact)"
           touch $filename
           echo "$artifact" > $(artifact)
           echo "repository=$(echo $artifact)"  >> "$GITHUB_ENV"
