@@ -64,9 +64,13 @@ jobs:
           sha=$(git rev-parse --short "$GITHUB_SHA")
           echo $sha
           touch $sha
-          artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar_$version
+          artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar
           echo "artifact details are $artifact"
-          echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")-$(echo $version
+          echo "artifact:$artifact" > $(echo $name))-$(echo $version )
+          echo "version:$(echo $version)"  >> $(echo $name))-$(echo $version )
+          echo "semanticVersion:$(echo $version)" >> $(echo $name))-$(echo $version )
+          echo "repo:${{ github.repository }}" >> $(echo $name))-$(echo $version )
+          
 
           
           
@@ -86,7 +90,7 @@ jobs:
         API_TOKEN_GITHUB: ${{ secrets.Build_REPO_PERSONAL_ACCESS_TOKEN }}   
       with:
         # GitHub Action output files
-        source_file: '${{ env.sha_short }}-${{ env.pomversion}}'
+        source_file: '${{ env.artifactid }}-${{ env.pomversion}}'
       #  source_file: '$artifact'
         user_name: 'ArunKumarReddy407'
         destination_repo: 'ArunKumarReddy407/buildmetadata'
