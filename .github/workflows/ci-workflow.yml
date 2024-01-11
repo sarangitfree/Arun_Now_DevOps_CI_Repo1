@@ -69,9 +69,10 @@ jobs:
           echo "repo=$(echo $reponame)"  >> "$GITHUB_ENV"
           artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar_$version/"$reponame"
           echo "artifact details are $artifact"
+          touch $artifact
+          echo "$artifact" > $(artifact)
           echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")
-
-          
+          echo "repository=$(echo $artifact)"  >> "$GITHUB_ENV"
           
     - name: ServiceNow Register Artifact
       uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
@@ -89,8 +90,8 @@ jobs:
         API_TOKEN_GITHUB: ${{ secrets.Build_REPO_PERSONAL_ACCESS_TOKEN }}   
       with:
         # GitHub Action output files
-        source_file: '${{ env.sha_short }}'
-      #  source_file: '$artifact'
+       # source_file: '${{ env.sha_short }}'
+        source_file: '${{ env.repository }}'
         user_name: 'ArunKumarReddy407'
         destination_repo: 'ArunKumarReddy407/buildmetadata'
         destination_folder: 'release/comp1/'
