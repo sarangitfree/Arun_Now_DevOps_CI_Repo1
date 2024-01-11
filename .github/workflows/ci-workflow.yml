@@ -67,7 +67,7 @@ jobs:
           reponame=$(basename -s .git `git config --get remote.origin.url`)
           echo $reponame
           echo "repo=$(echo $reponame)"  >> "$GITHUB_ENV"
-          artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar_$version/"$reponame"
+          artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar_$version_"$reponame"
           echo "artifact details are $artifact"
           touch $artifact
           echo "$artifact" > $(artifact)
