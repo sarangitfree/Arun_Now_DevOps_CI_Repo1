@@ -69,10 +69,12 @@ jobs:
           echo "repo=$(echo $reponame)"  >> "$GITHUB_ENV"
           artifact=$name-$(git rev-parse --short "$GITHUB_SHA").jar_$version_"$reponame"
           echo "artifact details are $artifact"
-          touch $artifact
+          echo "filename=$(echo $name)"
+          touch $filename
           echo "$artifact" > $(artifact)
-          echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")
           echo "repository=$(echo $artifact)"  >> "$GITHUB_ENV"
+        # echo "$artifact" > $(git rev-parse --short "$GITHUB_SHA")
+          
           
     - name: ServiceNow Register Artifact
       uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
