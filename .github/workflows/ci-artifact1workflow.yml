@@ -5,9 +5,7 @@ name: CI GitHub workflow
 on: 
   push:
    branches: [ "feature-artifact1" ]
-  pull_request:
-    branches: [ "release-artifact1" ]
-    types: [opened, synchronize, reopened]
+
 
 jobs:
   build:
