@@ -2,9 +2,9 @@
 
 name: CI GitHub workflow
 
-on: workflow_dispatch
-  # push:
-  #   branches: [ "main" ]
+on: 
+  push:
+   branches: [ "feature-artifact1" ]
   # pull_request:
   #   branches: [ "main" ]
   #   types: [opened, synchronize, reopened]
