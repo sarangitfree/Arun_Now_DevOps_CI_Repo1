@@ -1,8 +1,9 @@
 # This workflow uses ServiceNow custom actions that are certified by ServiceNow.
 name: CI GitHub workflow
 on: 
-   push:
-     branches: [ "release-artifact1" ]
+ pull_request:
+    branches: [ "release-artifact1" ]
+    types: [opened, synchronize, reopened]
 jobs:
   build:
     name: 'Build'
