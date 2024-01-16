@@ -2,7 +2,7 @@
 name: CI GitHub workflow
 on: 
    push:
-     branches: [ "release-artifact1 " ]
+     branches: [ "release-artifact1" ]
 jobs:
   build:
     name: 'Build'
