@@ -1,19 +1,12 @@
 # This workflow uses ServiceNow custom actions that are certified by ServiceNow.
-
 name: CI GitHub workflow
-
-on: workflow_dispatch
-  # push:
-  #   branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
-  #   types: [opened, synchronize, reopened]
-
+on: 
+   push:
+     branches: [ "release-artifact1 " ]
 jobs:
   build:
     name: 'Build'
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -69,11 +62,7 @@ jobs:
           echo "artifact:$artifact" > $(echo $name)-$(echo $version )
           echo "version:$(echo $version)"  >> $(echo $name)-$(echo $version )
           echo "semanticVersion:$(echo $version)" >> $(echo $name)-$(echo $version )
-          echo "repo:${{ github.repository }}" >> $(echo $name)-$(echo $version )
-          
-
-          
-          
+          echo "repo:${{ github.repository }}" >> $(echo $name)-$(echo $version )          
     - name: ServiceNow Register Artifact
       uses: ServiceNow/servicenow-devops-register-artifact@v2.0.0
       with:
