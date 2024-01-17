@@ -1,5 +1,5 @@
 # This workflow uses ServiceNow custom actions that are certified by ServiceNow.
-name: postmerge-artifact-workflow.
+name: postmerge-artifact-workflow
 on: 
   push:
    branches: [ "release-*" ]
