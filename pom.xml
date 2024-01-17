@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.example</groupId>
-	<artifactId>app1-release</artifactId>
+	<artifactId>app1-comp1</artifactId>
 	<version>4.0.0</version>
 	<name>ServiceNow DevOps Change Sample</name>
 
