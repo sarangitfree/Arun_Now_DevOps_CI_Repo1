@@ -88,3 +88,11 @@ jobs:
         # It defaults to `main`
         #target-branch: "main"
         commit_message: 'Push artifact1 to Build registry repo'
+
+  deploytotest:
+    name: 'DeploytoTest'
+    needs: registerartifact
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run deployment scripts
+      run: echo 'Deployment step in progress...'
