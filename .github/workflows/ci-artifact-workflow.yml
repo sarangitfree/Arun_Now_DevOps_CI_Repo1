@@ -41,3 +41,11 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: 'Test'
           xml-report-filename: target/surefire-reports/testng-results.xml
+
+  deploytodev:
+    name: 'Deploytodev'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run deployment scripts
+      run: echo 'Deployment step in progress...'
